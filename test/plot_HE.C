@@ -1,43 +1,8 @@
 // Commands executed in a GLOBAL scope, e.g. created hitograms aren't erased...
 {
-
-  // clear everything out at the beginning
-  //
-  gROOT->Reset() ;
-  
-  //...Redefine Colors
-  TColor *color = (TColor*)(gROOT->GetListOfColors()->At(41));
-  color->SetRGB(1.0, 0.1, 0.5); // deep roze    
-  TColor *color = (TColor*)(gROOT->GetListOfColors()->At(42));
-  color->SetRGB(0.5, 0.8, 0.1); // light green  
-  TColor *color = (TColor*)(gROOT->GetListOfColors()->At(43));
-  color->SetRGB(0.1, 0.5, 0.3); // dark  green  
-  TColor *color = (TColor*)(gROOT->GetListOfColors()->At(44));
-  color->SetRGB(0.5, 0.2, 0.8); // blue-violet  
-  TColor *color = (TColor*)(gROOT->GetListOfColors()->At(45));
-  color->SetRGB(0.2, 0.6, 0.9); // grey-blue    
-  TColor *color = (TColor*)(gROOT->GetListOfColors()->At(46));
-  color->SetRGB(1.0, 0.5, 0.0); // orange-brick 
-  TColor *color = (TColor*)(gROOT->GetListOfColors()->At(47));
-  color->SetRGB(0.8, 0.0, 0.0); // brick 
-  //
-  TColor *color = (TColor*)(gROOT->GetListOfColors()->At(51));
-  color->SetRGB(1.0 , 1.0 , 0.8 ); // lightest yellow 
-  TColor *color = (TColor*)(gROOT->GetListOfColors()->At(52));
-  color->SetRGB(0.8 , 1.00, 1.00); // lightest blue-cyan        
-  TColor *color = (TColor*)(gROOT->GetListOfColors()->At(53));
-  color->SetRGB(1.0 , 0.95, 0.95); // lightest rose
-  TColor *color = (TColor*)(gROOT->GetListOfColors()->At(54));
-  color->SetRGB(0.8 , 1.0 , 0.8 ); // lightest green
-  TColor *color = (TColor*)(gROOT->GetListOfColors()->At(55));
-  color->SetRGB(1.00, 1.00, 1.00); // white
-
-  //***************************************************************************
-  //...First - the input file 
-
  
   //  char * filename = "simevent.root";
-  char * filename = "simevent_HB.root";
+  char * filename = "simevent_HE.root";
   char * treename = "Events";        //The Title of Tree.
   
   delete gROOT->GetListOfFiles()->FindObject(filename);
@@ -75,7 +40,7 @@
   // Histo titles-labels
 
   const int Nhist1     = 46, Nhist2 = 1;  // N simple and N combined histos
-  const int Nhist1spec =  7;              // N special out of Nsimple total 
+  const int Nhist1spec =  6;              // N special out of Nsimple total 
   const int nLayersMAX = 20;
   const int nDepthsMAX =  5;
 
@@ -186,32 +151,30 @@
   //***************************************************************************
   //...Book histograms 
 
-  for (int i = 0; i < Nhist1-Nhist1spec; i++) {
+  for (Int_t i = 0; i < Nhist1-Nhist1spec; i++) {
     char hname[3]; 
     sprintf(hname,"h%d",i);
 
-    if(i == 7 || i == 8){
-      TH1F *h1[i] = new TH1F(hname,label1[i],100,-0.1,0.1);  
+    if(i == 4 || i == 7 || i == 8 || i == 11 || i == 12) {
+      if(i == 11)  TH1F *h1[i] = new TH1F(hname,label1[i],100,-5.,5.);   
+      if(i == 12)  
+	TH1F *h1[i] = new TH1F(hname,label1[i],72,-3.1415926,3.1415926);   
+      if(i == 7 || i == 8) TH1F *h1[i] = new TH1F(hname,label1[i],100,-0.1,0.1);  
+      if( i == 4)  TH1F *h1[i] = new TH1F(hname,label1[i],60,0.,60.);  
     }
-    else {
-      if( i == 4 ) {
-	TH1F *h1[i] = new TH1F(hname,label1[i],60,0.,60.);  
-      }
-      else { 
-	TH1F *h1[i] = new TH1F(hname,label1[i],100,1.,0.);  
-      }
+    else { 
+      TH1F *h1[i] = new TH1F(hname,label1[i],100,1.,0.);  
     }
+
   }
-  // Special : transverse profile 
-  TH1F *h1[39] = new TH1F("h39",label1[39],4,0.,4.);  
 
   // Special : global timing < 50 ns 
   TH1F *h1[40] = new TH1F("h40",label1[40],50,0.,50.);  
   // Special : timing in the cluster (7x7) enery-weighted
   TH1F *h1[41] = new TH1F("h41",label1[41],30,0.,30.);  
   // Special : number of ECAL&HCAL hits
-  TH1F *h1[42] = new TH1F("h42",label1[42],150,0.,150.);  
-  TH1F *h1[43] = new TH1F("h43",label1[43],150,0.,150.);  
+  TH1F *h1[42] = new TH1F("h42",label1[42],100,0.,500.);  
+  TH1F *h1[43] = new TH1F("h43",label1[43],60,0.,300.);  
   TH1F *h1[44] = new TH1F("h44",label1[44],100,0.,500.);  
 
   // Special : Longitudinal profile
@@ -221,7 +184,7 @@
   for (int i = 0; i < Nhist2; i++) {
     char hname[3]; 
     sprintf(hname,"D%d",i);
-    TH2F *h2[i] = new TH2F(hname,label2[i],40,0.,40.,40,0.,40.);
+    TH2F *h2[i] = new TH2F(hname,label2[i],150,0.,150.,150,0.,150.);
   }
   //  h[i]->Sumw2();         // to get errors properly calculated
 
@@ -353,7 +316,7 @@
       int id    = (int)idHits[j];
 
       if(id >= 10) {ne++;}
-      else {nh++;}
+      else {if (id < 5) nh++;}
 
       //      cout << "Hit subdet = " << id  << "  lay = " << layer << endl;
 
@@ -366,6 +329,7 @@
       //      h1[28]->Fill(jitterHits[j]);   // no jitter anymore
 
       h1[40]->Fill(tHits[j]);
+      h1[41]->Fill(tHits[j],eHits[j]);
       
       if(id < 6) { // HCAL only. Depth is needed, not layer !!!
 	//if(layer == 0)               h2g[0]->Fill(etaHits[j],phiHits[j]);
@@ -394,8 +358,6 @@
       h1[30]->Fill(tIxI[j]);
 
       h1[39]->Fill((Float_t(iIxI[j]),eIxI[j]));  // transverse profile
-      h1[41]->Fill(tIxI[j],eIxI[j]);            // timing weighted  
-   
 
     }
 
@@ -437,44 +399,16 @@
   cout << "After event cycle " << i << endl;
 
 
-  // Transverse size histo integration
-    
-  h = h1[39];
-  if(h->Integral() > 1.e-30 && h->Integral() < 1.e30 ) {
-    
-    int size = h->GetNbinsX();                  
-    Float_t sum = 0.;
-
-    for (int i = 1; i <= size; i++) { 
-      sum += h->GetBinContent(i);
-      h->SetBinContent((Int_t)i, (Float_t)sum);
-    }
-    for (int i = 1; i <= size; i++) { 
-      Float_t y = h->GetBinContent(i);
-      h->SetBinContent((Int_t)i, (Float_t)(y/sum));
-      //      cout << " bin " << i << " content = " << y/sum << endl;
-    }
-  }
- 
+  //...Prepare the main canva 
+  TCanvas *myc = new TCanvas("myc","",800,600);
+  gStyle->SetOptStat(1111);   // set stat         :0 - nothing 
  
   // Cycle for 1D distributions
   for (int ihist = 0; ihist < Nhist1 ; ihist++) {
     if(h1[ihist]->Integral() > 1.e-30 && h1[ihist]->Integral() < 1.e30 ) { 
-      // avoid empty or strange ...
-      
-      //...Prepare the main canva 
-      TCanvas *myc = new TCanvas("myc","",800,600);
-      gStyle->SetOptStat(1111);   // set stat         :0 - nothing 
-      
-      //myc->SetBorderSize(1);
-      //myc->SetFrameFillColor(55); // white !
-      //myc->SetFillColor(52);
       
       h1[ihist]->SetLineColor(45);
       h1[ihist]->SetLineWidth(2); 
-      
-      //      h1[ihist]->GetXaxis()->SetTickLength(-0.01);
-      //      h1[ihist]->GetYaxis()->SetTickLength(-0.01);
       
       h1[ihist]->Draw("h");
       myc->SaveAs(label1[ihist]);
@@ -484,11 +418,6 @@
   // Cycle for energy in all layers
   for (int ihist = 0; ihist < nLayersMAX; ihist++) {
     if(h1l[ihist]->Integral() > 1.e-30 && h1l[ihist]->Integral() < 1.e30 ) { 
-      TCanvas *myc = new TCanvas("myc","",800,600);
-      gStyle->SetOptStat(1111);  
-      //myc->SetBorderSize(1);
-      //myc->SetFrameFillColor(55);
-      //myc->SetFillColor(52);
       
       h1l[ihist]->SetLineColor(45);
       h1l[ihist]->SetLineWidth(2); 
@@ -498,36 +427,12 @@
     }
   }
 
-  /*
-  // Cycle for energy in all depths
-  for (int ihist = 0; ihist < nDepthsMAX; ihist++) {
-    if(h1d[ihist]->Integral() > 1.e-30 && h1d[ihist]->Integral() < 1.e30 ) { 
-      TCanvas *myc = new TCanvas("myc","",800,600);
-      gStyle->SetOptStat(1111);  
-      //myc->SetBorderSize(1);
-      //myc->SetFrameFillColor(55);
-      //myc->SetFillColor(52);
-      
-      h1d[ihist]->SetLineColor(45);
-      h1d[ihist]->SetLineWidth(2); 
-      
-      h1d[ihist]->Draw("h");
-      myc->SaveAs(label1d[ihist]);
-    }
-  }
-  */
-
 
   // Cycle for 2D distributions 
   //  for (int ihist = 0; ihist < 1 ; ihist++) {
   for (int ihist = 0; ihist < Nhist2 ; ihist++) {
     if(h2[ihist]->Integral() > 1.e-30 && h2[ihist]->Integral() < 1.e30 ) { 
-      TCanvas *myc = new TCanvas("myc","",800,600);
-      gStyle->SetOptStat(1111);  
-      //myc->SetBorderSize(1);
-      //myc->SetFrameFillColor(55);
-      //myc->SetFillColor(52);
-      
+
       h2[ihist]->SetMarkerColor(45);
       h2[ihist]->SetMarkerStyle(20);
       h2[ihist]->SetMarkerSize(0.7);  // marker size !
@@ -546,11 +451,6 @@
   //  for (int ihist = 0; ihist < 5 ; ihist++) {
   for (int ihist = 4; ihist < 5 ; ihist++) {
     if(h2g[ihist]->Integral() > 1.e-30 && h2g[ihist]->Integral() < 1.e30 ) { 
-      TCanvas *myc = new TCanvas("myc","",800,600);
-      gStyle->SetOptStat(1111);  
-      //myc->SetBorderSize(1);
-      //myc->SetFrameFillColor(55);
-      //myc->SetFillColor(52);
       
       h2g[ihist]->SetMarkerColor(41);
       h2g[ihist]->SetMarkerStyle(20);
@@ -566,15 +466,14 @@
   }
  
 
-  // COMMENT OUT THE REST (storing/comparison) =========================
-  /*
+ 
 
   // added by Julia Yarba
   //-----------------------   
   // this is a temporary stuff that I've made
   // to create a reference ROOT histogram file
   
-  TFile OutFile("simg4hcal_ref.root","RECREATE") ;
+  TFile OutFile("HE_ref.root","RECREATE") ;
   int ih = 0 ;
   for ( ih=0; ih<nLayersMAX; ih++ )
   {
@@ -589,6 +488,7 @@
   OutFile.Close() ;
 
 
+  return;
 
  
 
@@ -599,16 +499,16 @@
    
    // open up ref. ROOT file
    //
-   TFile RefFile("simg4hcal_ref.root") ;
+   TFile RefFile("HE_ref.root") ;
    
    // service variables
    //
    TH1F* ref_hist = 0 ;
    int ih = 0 ;
    
-   // loop over layers 1-6 
+   // loop over layers 1-10 
    //
-   for ( ih=1; ih<7; ih++ )
+   for ( ih=1; ih<11; ih++ )
    {
       // service - name of the ref histo
       //
@@ -642,7 +542,7 @@
 
    // loop over specials : timing,  nhits(ECAL and HCAL) 
    //
-   for ( ih=39; ih<46; ih++ )
+   for ( ih=40; ih<46; ih++ )
    {
       // service - name of the ref histo
       //
@@ -669,7 +569,7 @@
 	 
 	 // output Chi2 comparison results
 	 //
-	 cout << "[OVAL] : Edep in Layer " << ih << ", p-value= " << pval << endl ;
+	 cout << "[OVAL] : histo " << ih << ", p-value= " << pval << endl ;
       }
    }
 
