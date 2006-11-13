@@ -5,6 +5,7 @@ es_source = XMLIdealGeometryESSource {
 		"Geometry/HcalCommonData/data/hcalrotations.xml",
 		"Geometry/HcalCommonData/data/hcalforwardmaterial.xml",
 		"Geometry/CMSCommonData/data/cms.xml",
+                "Geometry/CMSCommonData/data/mgnt.xml",
 		"Geometry/HcalCommonData/data/hcalalgo.xml",
 		"Geometry/EcalCommonData/data/ecal.xml",
 		"Geometry/HcalCommonData/data/hcalbarrelalgo.xml",
