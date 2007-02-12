@@ -1,0 +1,41 @@
+<?xml version="1.0" ?>
+<SVSuite>
+
+	<SVSuiteSpec Name="SVSuite-HcalHits-HB-tst" Type="Processing">
+	        <Parameter Name="InputDataset" Value="/SVSuite122-HcalChain-Pion100GeVHB-GenEvents/GEN/CMSSW_1_2_2-GEN-1170955219"/>
+		<Parameter Name="SplitSize" Value="200"/>
+		<Parameter Name="SplitType" Value="event"/>
+		<Parameter Name="SaveCMSRunOutput" Value="True"/>
+		<Parameter Name="NumberOfJobs" Value="10"/>
+		<Parameter Name="Configuration" Value="Validation/HcalHits/test/run_HB.cfg"/>
+		<ReferenceLFN>
+			/store/SVSuite/Reference/SVSuite-data-Hcal-CMSSW_1_2_0.tar.gz
+		</ReferenceLFN>
+		<Tool Name="runHcalHits plot_HB"/>
+	</SVSuiteSpec>
+	<SVSuiteSpec Name="SVSuite-HcalHits-HE-tst" Type="Processing">
+	        <Parameter Name="InputDataset" Value="/SVSuite122-HcalChain-Pion100GeVHE-GenEvents/GEN/CMSSW_1_2_2-GEN-1170975980"/>
+		<Parameter Name="SplitSize" Value="200"/>
+		<Parameter Name="SplitType" Value="event"/>
+		<Parameter Name="SaveCMSRunOutput" Value="True"/>
+		<Parameter Name="NumberOfJobs" Value="10"/>
+		<Parameter Name="Configuration" Value="Validation/HcalHits/test/run_HE.cfg"/>
+		<ReferenceLFN>
+			/store/SVSuite/Reference/SVSuite-data-Hcal-CMSSW_1_2_0.tar.gz
+		</ReferenceLFN>
+		<Tool Name="runHcalHits plot_HE"/>
+	</SVSuiteSpec>
+	<SVSuiteSpec Name="SVSuite-HcalHits-HF-tst" Type="Processing">
+	        <Parameter Name="InputDataset" Value="/SVSuite122-HcalChain-Pion100GeVHF-GenEvents/GEN/CMSSW_1_2_2-GEN-1170977277"/>
+		<Parameter Name="SplitSize" Value="200"/>
+		<Parameter Name="SplitType" Value="event"/>
+		<Parameter Name="SaveCMSRunOutput" Value="True"/>
+		<Parameter Name="NumberOfJobs" Value="10"/>
+		<Parameter Name="Configuration" Value="Validation/HcalHits/test/run_HF.cfg"/>
+		<ReferenceLFN>
+			/store/SVSuite/Reference/SVSuite-data-Hcal-CMSSW_1_2_0.tar.gz
+		</ReferenceLFN>
+		<Tool Name="runHcalHits plot_HF"/>
+	</SVSuiteSpec>
+
+</SVSuite>
