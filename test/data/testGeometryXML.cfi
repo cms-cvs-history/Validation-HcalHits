@@ -11,8 +11,6 @@ es_source = XMLIdealGeometryESSource {
        "Geometry/CMSCommonData/data/mgnt.xml",
        "Geometry/CMSCommonData/data/muonMagnet.xml",
        "Geometry/CMSCommonData/data/muonMB.xml",
-               "Geometry/CMSCommonData/data/cmsBeam.xml",
-               "Geometry/CMSCommonData/data/beampipe.xml",
                "Geometry/CMSCommonData/data/caloBase.xml",
                "Geometry/CMSCommonData/data/cmsCalo.xml",
        "Geometry/HcalCommonData/data/hcalalgo.xml",
