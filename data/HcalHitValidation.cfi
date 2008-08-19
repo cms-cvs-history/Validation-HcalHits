@@ -4,7 +4,7 @@
       untracked string LayerInfo     = "HcalInfoLayer"
       untracked string NxNInfo       = "HcalInfoNxN"
       untracked string JetsInfo      = "HcalInfoJets"
-      untracked string OutputFile    = "valid_HB.root"
+      untracked string outputFile    = "valid_HB.root"
       untracked bool   Verbose       = true
       untracked bool   TestNumbering = true
       untracked bool   ValidHits     = true
