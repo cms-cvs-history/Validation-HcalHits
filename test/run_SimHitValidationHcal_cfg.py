@@ -9,6 +9,7 @@ process = cms.Process('SIMVAL')
 
 # import of standard configurations
 process.load('Configuration.StandardSequences.Services_cff')
+process.load("Configuration.StandardSequences.SimulationRandomNumberGeneratorSeeds_cff")
 process.load('SimGeneral.HepPDTESSource.pythiapdt_cfi')
 process.load('FWCore.MessageService.MessageLogger_cfi')
 process.load('Configuration.EventContent.EventContent_cff')
@@ -32,49 +33,52 @@ process.maxEvents = cms.untracked.PSet(
 )
 
 # Input source
-process.source = cms.Source("EmptySource")
+process.source = cms.Source("EmptySource",
+			    firstRun = cms.untracked.uint32(2)
+)
 
 process.options = cms.untracked.PSet(
 
 )
 
+
+
 # Production Info
 process.configurationMetadata = cms.untracked.PSet(
-    version = cms.untracked.string('$Revision: 1.303.2.3 $'),
-    annotation = cms.untracked.string('Configuration/Generator/python/SinglePiE30HCAL_cfi.py nevts:10000'),
-    name = cms.untracked.string('PyReleaseValidation')
+	version = cms.untracked.string('$Revision: 1.1 $'),
+	annotation = cms.untracked.string('Configuration/Generator/python/SinglePiE30HCAL_cfi.py nevts:10000'),
+	name = cms.untracked.string('PyReleaseValidation')
 )
 
 # Output definition
 
 process.ValidationOutput = cms.OutputModule("PoolOutputModule",
-    outputCommands = cms.untracked.vstring('drop *', 'keep *_MEtoEDMConverter_*_*'),
-    fileName = cms.untracked.string('output1.root'),
+					    outputCommands = cms.untracked.vstring('drop *', 'keep *_MEtoEDMConverter_*_*'),
+					    fileName = cms.untracked.string('output_seed2.root'),
 )
 
 # Additional output definition
 
 # Other statements
 process.load("Configuration.StandardSequences.FrontierConditions_GlobalTag_cff")
-from Configuration.AlCa.autoCond import autoCond
-process.GlobalTag.globaltag = autoCond['mc']
+process.GlobalTag.globaltag = cms.string('MC_60_V5::All')
 
 process.generator = cms.EDProducer("FlatRandomEGunProducer",
-    PGunParameters = cms.PSet(
+				   PGunParameters = cms.PSet(
         PartID = cms.vint32(211),
-        MaxEta = cms.double(5.0),
-        MaxPhi = cms.double(3.14159265359),
         MinEta = cms.double(-5.0),
-        MinE = cms.double(29.99),
+        MaxEta = cms.double(5.0),
         MinPhi = cms.double(-3.14159265359),
+        MaxPhi = cms.double(3.14159265359),
+        MinE = cms.double(29.99),
         MaxE = cms.double(30.01)
-    ),
-    Verbosity = cms.untracked.int32(0),
-    psethack = cms.string('single pi E 30 HCAL'),
-    AddAntiParticle = cms.bool(True),
-    firstRun = cms.untracked.uint32(1)
+	),
+				   Verbosity = cms.untracked.int32(0),
+				   psethack = cms.string('single pi E 30 HCAL'),
+				   AddAntiParticle = cms.bool(True)
 )
 
+process.RandomNumberGeneratorService.generator.initialSeed = 1988504
 
 # Path and EndPath definitions
 process.generation_step = cms.Path(process.pgen)
